@@ -10,27 +10,31 @@
 
 ## Installation
 
-    go get github.com/Soluto/casbin-nats-watcher
+    go get github.com/HandleKun/casbin-nats-watcher
 
 ## Usage
 
 ```go
 import (
-    natswatcher "github.com/Soluto/casbin-nats-watcher"
-    "github.com/casbin/casbin"
+    natswatcher "github.com/HandleKun/casbin-nats-watcher"
+    "github.com/casbin/casbin/v2"
 )
 
 func main() {
     watcher, _ := natswatcher.NewWatcher("http://nats-endpoint", "my-policy-subject")
 
-    enforcer := casbin.NewSyncedEnforcer("model.conf", "policy.csv")
+    enforcer, _ := casbin.NewSyncedEnforcer("model.conf", "policy.csv")
     enforcer.SetWatcher(watcher)
+    
+    watcher.SetUpdateCallback(func(m string) {
+        enforcer.LoadPolicy()
+    })
 }
 ```
 
 ## Related pojects
 - [Casbin](https://github.com/casbin/casbin)
-- [Nats.io](https://github.com/nats-io/go-nats)
+- [Nats.io](https://github.com/nats-io/nats.go)
 
 
 ## Additional Usage Examples

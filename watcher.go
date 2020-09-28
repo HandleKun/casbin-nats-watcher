@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/casbin/casbin/persist"
-	"github.com/nats-io/go-nats"
+	"github.com/casbin/casbin/v2/persist"
+	"github.com/nats-io/nats.go"
 )
 
 // Watcher implements persist.Watcher interface
